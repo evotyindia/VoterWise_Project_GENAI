@@ -40,26 +40,36 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Quick Location Check (Mocked UI) */}
+      {/* Quick Location Check */}
       <section className="max-w-3xl mx-auto w-full px-4">
-        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-card flex flex-col md:flex-row gap-6 items-center">
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-card flex flex-col md:flex-row gap-6 items-center target-feature">
           <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
             <MapPin size={20} />
           </div>
           <div className="flex-1 text-center md:text-left">
             <h3 className="text-xl font-bold text-[#0A2540] dark:text-white mb-2">Find Your Local Info</h3>
-            <p className="text-slate-600 dark:text-slate-400 mb-4 md:mb-0">Enter your State or City to see relevant guidelines and updates.</p>
+            <p className="text-slate-600 dark:text-slate-400 mb-4 md:mb-0">Enter your State or City to search the ECI portal for relevant guidelines.</p>
           </div>
-          <div className="w-full md:w-auto relative flex items-center">
+          <form 
+            className="w-full md:w-auto relative flex items-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const query = (e.currentTarget.elements.namedItem('search') as HTMLInputElement).value;
+              if (query) {
+                window.open(`https://results.eci.gov.in/search?q=${encodeURIComponent(query)}`, '_blank');
+              }
+            }}
+          >
             <input 
               type="text" 
+              name="search"
               placeholder="e.g. Maharashtra" 
               className="w-full md:w-64 pl-4 pr-12 py-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 focus:outline-none focus:border-brand-blue transition-all dark:text-white"
             />
-            <button className="absolute right-3 p-2 bg-brand-blue text-white rounded-xl hover:bg-brand-blue/90">
+            <button type="submit" className="absolute right-3 p-2 bg-brand-blue text-white rounded-xl hover:bg-[#0A2540] transition-colors cursor-pointer">
               <Search size={16} />
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
